@@ -6,6 +6,7 @@ import sys
 import cv2.cv as cv
 from optparse import OptionParser
 import requests
+import time
 
 min_size = (20, 20)
 image_scale = 2
@@ -39,13 +40,17 @@ def detect_and_draw(img, cascade):
                 # bounding box of each face and convert it to two CvPoints
                 pt1 = (int(x * image_scale), int(y * image_scale))
                 pt2 = (int((x + w) * image_scale), int((y + h) * image_scale))
-                cv.Rectangle(new_img, pt1, pt2, cv.RGB(255, 0, 0), 3, 8, 0)
+                # cv.Rectangle(new_img, pt1, pt2, cv.RGB(255, 0, 0), 3, 8, 0)
+
                 filename = './testcapture.jpg'
                 crop_img = cv.GetSubRect(img,(int(x * image_scale), int(y * image_scale), int(w * image_scale), int(h * image_scale)))
                 cv.SaveImage(filename, crop_img)
-                cv.ShowImage("video", img)
-                send_image(filename, 'http://postcatcher.in/catchers/553ba3954a0cbe03000003c5', '1')
-                # send_image(filename, 'http://battle.curtish.me/uploadtest', '1')
+                print 'detected'
+                cv.ShowImage("video", crop_img)
+                # send_image(filename, 'http://postcatcher.in/catchers/553ba3954a0cbe03000003c5', '1')
+                send_image(filename, 'http://battle.curtish.me/uploadtest', '1')
+        time.sleep(1)
+
 
     # cv.ShowImage("video", new_img)
 
