@@ -57,7 +57,7 @@ def detect_and_draw(img, cascade):
 def send_image(img, endpoint, beaconId):
     files = {'file': (img, open(img, 'rb'), 'image/jpeg', {'Expires': '0'})}
     r = requests.post(endpoint+'?beaconId='+beaconId, files=files)
-    return r.text
+    print r.text
 
 
 if __name__ == '__main__':
